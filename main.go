@@ -9,7 +9,7 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	vwl := []string{"a", "o", "u", "e", "A", "O", "U", "E" , "I" , "i"}
+	vwl := []string{"a", "o", "u", "e", "A", "O", "U", "E", "I", "i"}
 	if len(args) != 2 {
 		fmt.Println("Error")
 		os.Exit(1)
@@ -52,58 +52,80 @@ func main() {
 				arr[i-1] = Capital(arr[i-1])
 				arr = append(arr[:i], arr[i+1:]...)
 			} else if v == "(up," {
-				arr[i+1] = strings.TrimRight(arr[i+1], ")")
-				number, err := strconv.Atoi(arr[i+1])
-				if err != nil {
-					fmt.Println("Err")
-					os.Exit(1)
-				} else {
-					if number <= i {
-						for j := i - 1; number > 0; j-- {
-							number--
-							arr[j] = strings.ToUpper(arr[j])
+				if i != len(arr)-1 {
+					arr[i+1] = strings.TrimRight(arr[i+1], ")")
+					number, err := strconv.Atoi(arr[i+1])
+					if err != nil {
+						fmt.Println("Err")
+						os.Exit(1)
+					} else {
+						if number <= i {
+							for j := i - 1; number > 0; j-- {
+								number--
+								arr[j] = strings.ToUpper(arr[j])
+							}
+							arr = append(arr[:i], arr[i+2:]...)
 						}
-						arr = append(arr[:i], arr[i+2:]...)
 					}
+				} else {
+					fmt.Println("there is no number follow the tag")
+					os.Exit(1)
 				}
 			} else if v == "(low," {
-				arr[i+1] = strings.TrimRight(arr[i+1], ")")
-				number, err := strconv.Atoi(arr[i+1])
-				if err != nil {
-					fmt.Println("Err")
-					os.Exit(1)
-				} else {
-					if number <= i {
-						for j := i - 1; number > 0; j-- {
-							number--
-							arr[j] = strings.ToLower(arr[j])
+				if i != len(arr)-1 {
+					arr[i+1] = strings.TrimRight(arr[i+1], ")")
+					number, err := strconv.Atoi(arr[i+1])
+					if err != nil {
+						fmt.Println("Err")
+						os.Exit(1)
+					} else {
+						if number <= i {
+							for j := i - 1; number > 0; j-- {
+								number--
+								arr[j] = strings.ToLower(arr[j])
+							}
+							arr = append(arr[:i], arr[i+2:]...)
 						}
-						arr = append(arr[:i], arr[i+2:]...)
 					}
+				} else {
+					fmt.Println("there is no number follow the tag")
+					os.Exit(1)
 				}
 			} else if v == "(cap," {
-				arr[i+1] = strings.TrimRight(arr[i+1], ")")
-				number, err := strconv.Atoi(arr[i+1])
-				if err != nil {
-					fmt.Println("Err")
-					os.Exit(1)
-				} else {
-					if number <= i {
-						for j := i - 1; number > 0; j-- {
-							number--
-							arr[j] = Capital(arr[j])
+				if i != len(arr)-1 {
+					arr[i+1] = strings.TrimRight(arr[i+1], ")")
+					number, err := strconv.Atoi(arr[i+1])
+					if err != nil {
+						fmt.Println("Err")
+						os.Exit(1)
+					} else {
+						if number <= i {
+							for j := i - 1; number > 0; j-- {
+								number--
+								arr[j] = Capital(arr[j])
+							}
+							arr = append(arr[:i], arr[i+2:]...)
 						}
-						arr = append(arr[:i], arr[i+2:]...)
 					}
+				} else {
+					fmt.Println("there is no number follow the tag")
+					os.Exit(1)
 				}
 			} else if v == "a" || v == "A" {
-				w := arr[i+1]
-				if itHas(vwl, string(w[0])) {
-					if v == "a" {
-						arr[i] = "an"
-					} else {
-						arr[i] = "An"
+				if i != len(arr)-1 {
+					if arr[i+1] != "" {
+						w := arr[i+1]
+						if itHas(vwl, string(w[0])) {
+							if v == "a" {
+								arr[i] = "an"
+							} else {
+								arr[i] = "An"
+							}
+						}
 					}
+				} else {
+					fmt.Println("Error")
+					os.Exit(1)
 				}
 			}
 		}
